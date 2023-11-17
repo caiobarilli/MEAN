@@ -5,8 +5,8 @@
 
 | app         | host      | port |
 | ----------- | --------- | ---- |
-| **nestjs** | localhost | 5000 |
-| **postgresql** | localhost | 5000 |
+| **express** | localhost | 3000 |
+| **mongo** | localhost | 0000 |
 
 <br />
 
