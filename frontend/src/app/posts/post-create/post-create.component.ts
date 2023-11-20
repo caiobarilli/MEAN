@@ -5,5 +5,11 @@ import { Component } from '@angular/core';
   templateUrl: './post-create.component.html',
 })
 export class PostCreateComponent {
-  title = 'app';
+  textAreaValue = '';
+  title = 'Create new post!';
+
+  savePost() {
+    this.title = this.textAreaValue;
+    return;
+  }
 }

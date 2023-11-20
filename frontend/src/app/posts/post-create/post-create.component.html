@@ -1,1 +1,6 @@
-<h1>Create new post!</h1>
+<div>
+  <h1>{{ title }}</h1>
+  <textarea cols="4" rows="4" [(ngModel)]="textAreaValue"></textarea>
+
+  <button (click)="savePost()">SAVE</button>
+</div>
