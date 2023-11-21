@@ -6,7 +6,7 @@ import { Component } from '@angular/core';
     `
       mat-card {
         max-width: 80%;
-        margin: 1rem auto;
+        margin: 1rem auto 0;
       }
     `,
   ],

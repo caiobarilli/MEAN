@@ -2,11 +2,19 @@ import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-root',
+  styles: [
+    `
+      mat-card {
+        max-width: 80%;
+
+        margin: 1rem auto 0;
+      }
+    `,
+  ],
   template: `
-    <div>
-      <app-header></app-header>
-      <post-create></post-create>
-    </div>
+    <app-header></app-header>
+    <post-create></post-create>
+    <post-list></post-list>
   `,
 })
 export class AppComponent {}
