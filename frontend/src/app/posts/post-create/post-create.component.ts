@@ -4,7 +4,7 @@ import { Component } from '@angular/core';
   selector: 'post-create',
   styles: [
     `
-      .mat-card {
+      mat-card {
         max-width: 80%;
         margin: 1rem auto;
       }

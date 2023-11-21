@@ -1,22 +1,20 @@
-<mat-card class="mat-card">
+<mat-card>
   <mat-card-content
     ><h1>{{ title }}</h1></mat-card-content
   >
 </mat-card>
 
-<mat-card class="mat-card">
+<mat-card>
   <mat-card-content>
-    <form class="create-form">
-      <mat-form-field class="field-full-width">
-        <mat-label>Leave a comment</mat-label>
-        <textarea
-          matInput
-          placeholder="Ex. It makes me feel..."
-          [(ngModel)]="textAreaValue"
-        ></textarea>
-      </mat-form-field>
-      <br />
-      <button (click)="savePost()">SAVE</button>
-    </form>
+    <mat-form-field class="field-full-width">
+      <mat-label>Leave a comment</mat-label>
+      <textarea
+        matInput
+        placeholder="Ex. It makes me feel..."
+        [(ngModel)]="textAreaValue"
+      ></textarea>
+    </mat-form-field>
+    <br />
+    <button mat-stroked-button (click)="savePost()">SAVE</button>
   </mat-card-content>
 </mat-card>

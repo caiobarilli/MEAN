@@ -6,6 +6,7 @@ import { PostCreateComponent } from './posts/post-create/post-create.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatInputModule } from '@angular/material/input';
 import { MatCardModule } from '@angular/material/card';
+import { MatButtonModule } from '@angular/material/button';
 
 @NgModule({
   imports: [
@@ -14,6 +15,7 @@ import { MatCardModule } from '@angular/material/card';
     BrowserAnimationsModule,
     MatInputModule,
     MatCardModule,
+    MatButtonModule,
   ],
   declarations: [AppComponent, PostCreateComponent],
   bootstrap: [AppComponent],
