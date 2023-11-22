@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Output } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { Post } from '../../models/post.model';
+import { Post } from '@/models/post.model';
 
 @Component({
   selector: 'post-create',
@@ -17,9 +17,7 @@ import { Post } from '../../models/post.model';
   ],
   template: `
     <mat-card>
-      <mat-card-content
-        ><h1>{{ title }}</h1></mat-card-content
-      >
+      <mat-card-content><h1>Create new post!</h1></mat-card-content>
     </mat-card>
 
     <mat-card>
@@ -62,8 +60,6 @@ import { Post } from '../../models/post.model';
   `,
 })
 export class PostCreateComponent {
-  title = 'Create new post!';
-
   textValue = '';
   textAreaValue = '';
 
