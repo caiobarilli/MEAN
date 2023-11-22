@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 
 @Component({
   selector: 'post-create',
@@ -22,7 +22,7 @@ import { Component } from '@angular/core';
 
     <mat-card>
       <mat-card-content>
-        <form ((submit))="savePost()">
+        <form (submit)="savePost()">
           <mat-form-field class="field-full-width">
             <mat-label>Title</mat-label>
             <input
@@ -50,12 +50,18 @@ import { Component } from '@angular/core';
   `,
 })
 export class PostCreateComponent {
-  textValue = '';
-  textAreaValue = '';
   title = 'Create new post!';
 
+  textValue = '';
+  textAreaValue = '';
+
+  @Output() postCreated = new EventEmitter();
+
   savePost() {
-    console.log('Input values: ', this.textAreaValue, this.textValue);
-    return;
+    const post = {
+      title: this.textValue,
+      text: this.textAreaValue,
+    };
+    this.postCreated.emit(post);
   }
 }

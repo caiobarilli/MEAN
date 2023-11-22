@@ -1,20 +1,20 @@
 import { Component } from '@angular/core';
+import { Post } from './models/post.model';
 
 @Component({
   selector: 'app-root',
-  styles: [
-    `
-      mat-card {
-        max-width: 80%;
-
-        margin: 1rem auto 0;
-      }
-    `,
-  ],
   template: `
     <app-header></app-header>
-    <post-create></post-create>
-    <post-list></post-list>
+    <main>
+      <post-create (postCreated)="onPostAdded($event)"></post-create>
+      <post-list [posts]="savedPosts"></post-list>
+    </main>
   `,
 })
-export class AppComponent {}
+export class AppComponent {
+  savedPosts: Post[] = [];
+
+  onPostAdded(post: Post) {
+    this.savedPosts.push(post);
+  }
+}
