@@ -1,4 +1,6 @@
 import { Component, EventEmitter, Output } from '@angular/core';
+import { NgForm } from '@angular/forms';
+import { Post } from '../../models/post.model';
 
 @Component({
   selector: 'post-create',
@@ -22,25 +24,35 @@ import { Component, EventEmitter, Output } from '@angular/core';
 
     <mat-card>
       <mat-card-content>
-        <form (submit)="savePost()">
+        <form (submit)="savePost(postForm)" #postForm="ngForm">
           <mat-form-field class="field-full-width">
             <mat-label>Title</mat-label>
             <input
               matInput
               placeholder="Add a title"
-              [(ngModel)]="textValue"
-              [ngModelOptions]="{ standalone: true }"
+              name="title"
+              ngModel
+              required
+              #title="ngModel"
             />
+
+            <mat-error *ngIf="title.invalid"> Please enter a title </mat-error>
           </mat-form-field>
 
           <mat-form-field class="field-full-width">
-            <mat-label>Text</mat-label>
+            <mat-label>Content</mat-label>
             <textarea
               matInput
               placeholder="Add your text here"
-              [(ngModel)]="textAreaValue"
-              [ngModelOptions]="{ standalone: true }"
+              name="content"
+              ngModel
+              required
+              #content="ngModel"
             ></textarea>
+
+            <mat-error *ngIf="content.invalid">
+              Please enter a text content
+            </mat-error>
           </mat-form-field>
           <br />
           <button mat-stroked-button>SAVE</button>
@@ -55,16 +67,16 @@ export class PostCreateComponent {
   textValue = '';
   textAreaValue = '';
 
-  @Output() postCreated = new EventEmitter();
+  @Output() postCreated = new EventEmitter<Post>();
 
-  savePost() {
-    const post = {
-      title: this.textValue,
-      content: this.textAreaValue,
-    };
-
-    if (post.title !== '' && post.content !== '') {
-      this.postCreated.emit(post);
+  savePost(form: NgForm) {
+    if (form.invalid) {
+      return;
     }
+    const post = {
+      title: form.value.title,
+      content: form.value.content,
+    };
+    this.postCreated.emit(post);
   }
 }
