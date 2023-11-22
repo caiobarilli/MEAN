@@ -60,8 +60,11 @@ export class PostCreateComponent {
   savePost() {
     const post = {
       title: this.textValue,
-      text: this.textAreaValue,
+      content: this.textAreaValue,
     };
-    this.postCreated.emit(post);
+
+    if (post.title !== '' && post.content !== '') {
+      this.postCreated.emit(post);
+    }
   }
 }
