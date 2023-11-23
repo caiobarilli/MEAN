@@ -1,5 +1,7 @@
-import { Component, Input } from '@angular/core';
+import { Subscription } from 'rxjs';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Post } from '@/models/post.model';
+import { PostsService } from '@/services/post.service';
 
 @Component({
   selector: 'post-list',
@@ -44,8 +46,32 @@ import { Post } from '@/models/post.model';
     </div>
   `,
 })
-export class PostListComponent {
-  panelOpenState: boolean = false;
+export class PostListComponent implements OnInit, OnDestroy {
+  constructor(public postsService: PostsService) {}
 
-  @Input() posts: Post[] = [];
+  private postsSub: Subscription = new Subscription();
+  posts: Post[] = [];
+  panelOpenState: boolean = false;
+  // @Input() posts: Post[] = [];
+
+  /**
+   * Get all posts on init and subscribe to the postsUpdated Subject
+   * @returns {void}
+   */
+  ngOnInit(): void {
+    this.posts = this.postsService.getPosts();
+    this.postsSub = this.postsService
+      .getPostUpdateListener()
+      .subscribe((posts: Post[]) => {
+        this.posts = posts;
+      });
+  }
+
+  /**
+   * Unsubscribe from the postsUpdated Subject to prevent memory leaks
+   * @returns {void}
+   */
+  ngOnDestroy(): void {
+    this.postsSub.unsubscribe();
+  }
 }
