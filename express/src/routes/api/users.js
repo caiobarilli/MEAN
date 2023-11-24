@@ -11,7 +11,7 @@ const validate = require("../../middleware/validate");
 const router = express.Router();
 
 /**
- * @desc    Register users API endpoint
+ *    Register users API endpoint
  * @route   POST /api/users
  * @access  Public
  */

@@ -1,7 +1,7 @@
 const { validationResult } = require("express-validator");
 
 /**
- * @desc   Validates the request body
+ *   Validates the request body
  * @param  {Array} validations - Array of validations
  * @return {Function} - Returns a middleware function
  */

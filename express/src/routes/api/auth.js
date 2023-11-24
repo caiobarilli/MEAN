@@ -11,7 +11,7 @@ const User = require("../../models/User");
 const router = express.Router();
 
 /**
- * @desc    Auth API endpoint
+ *    Auth API endpoint
  * @route   GET /api/auth
  * @access  Public
  */
@@ -26,7 +26,7 @@ router.get("/", auth, async (req, res) => {
 });
 
 /**
- * @desc    Auth API endpoint
+ *    Auth API endpoint
  * @route   post /api/auth
  * @access  Public
  */
