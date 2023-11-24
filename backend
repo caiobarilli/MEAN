@@ -6,13 +6,13 @@ pwd=$(pwd)
 
 # Up container
 if [ "$str" = "up" ]; then
-    cd $pwd/angular
+    cd $pwd/express
     docker-compose up -d
 fi
 
 # Down container
 if [ "$str" = "down" ]; then
-    cd $pwd/angular
+    cd $pwd/express
     docker-compose down
 fi
 
