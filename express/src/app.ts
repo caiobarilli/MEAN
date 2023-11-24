@@ -1,4 +1,8 @@
-import * as express from 'express';
+import express from 'express';
+import authRouter from './routes/api/auth';
+import profileRouter from './routes/api/profile';
+import usersRouter from './routes/api/users';
+import postsRouter from './routes/api/posts';
 
 const expressApp = () => {
   /**
@@ -14,10 +18,10 @@ const expressApp = () => {
   /**
    * Define routes
    */
-  app.use('/api/auth', require('./routes/api/auth'));
-  app.use('/api/profile', require('./routes/api/profile'));
-  app.use('/api/users', require('./routes/api/users'));
-  app.use('/api/posts', require('./routes/api/posts'));
+  app.use('/api/auth', authRouter);
+  app.use('/api/profile', profileRouter);
+  app.use('/api/users', usersRouter);
+  app.use('/api/posts', postsRouter);
 
   /**
    * Start server
