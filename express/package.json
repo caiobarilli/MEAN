@@ -6,6 +6,7 @@
   "scripts": {
     "start": "nodemon server",
     "server": "nodemon --exec ts-node ./server.ts",
+    "build": "tsc --project tsconfig.json",
     "lint": "eslint \"{src}/**/*.ts\" --fix",
     "lint:fix": "npm run lint -- --fix"
   },
