@@ -13,6 +13,11 @@ const expressApp = () => {
   app.use(express.json());
 
   /**
+   * Use express.urlencoded() middleware to parse urlencoded data from request body
+   */
+  app.use(express.urlencoded({ extended: true }));
+
+  /**
    * Define routes
    */
   app.use('/api/posts', postsRouter);
