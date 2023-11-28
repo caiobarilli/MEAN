@@ -1,4 +1,5 @@
-import express, { Request, Response, Router } from 'express';
+import express, { Router } from 'express';
+import PostsController from '../../posts/posts.controller';
 
 const router: Router = express.Router();
 
@@ -7,6 +8,10 @@ const router: Router = express.Router();
  * @route GET /api/posts
  * @access Public
  */
-router.get('/', (req: Request, res: Response) => res.send('Posts Route'));
+router.get('/', PostsController.getAllPosts);
+router.get('/:id', PostsController.getPostById);
+router.post('/', PostsController.createPost);
+router.put('/:id', PostsController.updatePost);
+router.delete('/:id', PostsController.deletePost);
 
 export default router;
