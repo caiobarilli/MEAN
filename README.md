@@ -6,7 +6,7 @@
 | app         | host      | port |
 | ----------- | --------- | ---- |
 | **angular** | localhost | 4200 |
-| **express** | localhost | 3000 |
+| **express** | localhost | 5000 |
 | **mongo** | localhost | 27017 |
 
 <br />
