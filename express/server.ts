@@ -8,15 +8,20 @@ import * as dotenv from 'dotenv';
 dotenv.config();
 
 /**
- * Connect to MongoDB
+ * Connect to MongoDB and start express server
  */
-createConnection();
+const conn = createConnection();
+conn
+  .then(() => {
+    const app = expressApp();
 
-/**
- * Start express server
- */
-const app = expressApp();
+    app.listen(process.env.port || 5000, () =>
+      console.warn(`Server running on port ${process.env.port || 5000}`)
+    );
 
-app.listen(process.env.port || 5000, () =>
-  console.warn(`Server running on port ${process.env.port || 5000}`)
-);
+    console.warn('MongoDB is connected');
+  })
+  .catch((err: Error) => {
+    console.error(err);
+    process.exit(1);
+  });
