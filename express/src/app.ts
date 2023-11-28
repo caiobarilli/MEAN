@@ -1,6 +1,7 @@
-import express from 'express';
-import postsRouter from './routes/api/posts';
+import express, { NextFunction, Request, Response } from 'express';
 import { expressLogger, logger } from './config/winston.config';
+import postsRouter from './routes/api/posts';
+import { Error } from 'mongoose';
 
 const expressApp = () => {
   /**
@@ -24,11 +25,19 @@ const expressApp = () => {
   app.use(express.urlencoded({ extended: true }));
 
   /**
+   * Middleware to handle errors
+   */
+  app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
+    console.error(err.stack);
+    res.status(500).send('Internal Server Error');
+  });
+
+  /**
    * Define a route handler for the default home page
    */
   app.get('/', (req, res) => {
-    logger.info('Requisição recebida na rota /');
-    res.send('Hello, World!');
+    logger.info('Request to /');
+    res.status(200).send('Express & TypeScript');
   });
 
   /**
@@ -37,11 +46,9 @@ const expressApp = () => {
   app.use('/api/posts', postsRouter);
 
   /**
-   * Start server
+   * Return express app
    */
-  app.listen(process.env.port || 5000, () =>
-    console.warn(`Server running on port ${process.env.port || 5000}`)
-  );
+  return app;
 };
 
 export default expressApp;

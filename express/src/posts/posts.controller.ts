@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
-import PostService from './posts.service';
 import { IPost, PostSchemaValidation } from './entities/posts.entity';
+import PostService from './posts.service';
 
 class PostsController {
   public async getAllPosts(req: Request, res: Response): Promise<void> {
