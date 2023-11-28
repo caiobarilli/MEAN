@@ -7,7 +7,7 @@
 | ----------- | --------- | ---- |
 | **angular** | localhost | 4200 |
 | **express** | localhost | 3000 |
-| **mongo** | localhost | 0000 |
+| **mongo** | localhost | 27017 |
 
 <br />
 
