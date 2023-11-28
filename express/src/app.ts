@@ -35,7 +35,7 @@ const expressApp = () => {
   /**
    * Define a route handler for the default home page
    */
-  app.get('/', (req, res) => {
+  app.get('/', (req: Request, res: Response) => {
     logger.info('Request to /');
     res.status(200).send('Express & TypeScript');
   });
