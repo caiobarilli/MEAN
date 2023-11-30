@@ -1,5 +1,6 @@
 import express from 'express';
 import { expressLogger, logger } from './config/winston.config';
+import userRouter from './routes/api/users';
 import postsRouter from './routes/api/posts';
 
 const expressApp = () => {
@@ -34,6 +35,7 @@ const expressApp = () => {
   /**
    * Define routes
    */
+  app.use('/api/users', userRouter);
   app.use('/api/posts', postsRouter);
 
   /**
