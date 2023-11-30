@@ -25,7 +25,7 @@ module.exports = {
     ecmaVersion: 'latest'
   },
   rules: {
-    // "no-console": ["error", { allow: ["warn", "error"] }],
+    '@typescript-eslint/no-unused-vars': 'off',
     'no-undef': 'off'
   }
 };

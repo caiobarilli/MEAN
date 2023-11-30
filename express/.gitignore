@@ -23,3 +23,7 @@ yarn-error.log*
 .env.production
 .env.local
 .env.*.local
+
+# Arquivos de build
+dist/
+build/

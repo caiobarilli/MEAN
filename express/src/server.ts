@@ -1,5 +1,5 @@
-import createConnection from './src/config/mongoose.config';
-import expressApp from './src/app';
+import createConnection from './config/mongoose.config';
+import expressApp from './app';
 import * as dotenv from 'dotenv';
 
 /**
