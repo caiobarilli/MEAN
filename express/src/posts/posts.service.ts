@@ -3,23 +3,23 @@ import { IPost } from './entities/posts.entity';
 
 class PostService {
   public async getAllPosts(): Promise<IPost[]> {
-    return await PostRepository.getAllPosts();
+    return PostRepository.getAllPosts();
   }
 
-  public async getPostById(id: string): Promise<IPost | null> {
-    return await PostRepository.getPostById(id);
+  public getPostById(id: string): Promise<IPost | null> {
+    return PostRepository.getPostById(id);
   }
 
-  public async createPost(postData: IPost): Promise<IPost> {
-    return await PostRepository.createPost(postData);
+  public createPost(postData: IPost): Promise<IPost> {
+    return PostRepository.createPost(postData);
   }
 
-  public async updatePost(id: string, postData: IPost): Promise<IPost | null> {
-    return await PostRepository.updatePost(id, postData);
+  public updatePost(id: string, postData: IPost): Promise<IPost | null> {
+    return PostRepository.updatePost(id, postData);
   }
 
-  public async deletePost(id: string): Promise<void> {
-    return await PostRepository.deletePost(id);
+  public deletePost(id: string): Promise<void> {
+    return PostRepository.deletePost(id);
   }
 }
 

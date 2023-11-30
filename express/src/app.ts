@@ -26,8 +26,9 @@ const expressApp = () => {
   /**
    * Use middleware to handle errors
    */
-  app.use((err: Error) => {
-    logger.info(err.message);
+  app.use((err, req, res, next) => {
+    logger.error(err.message);
+    res.status(500).json({ error: 'Internal Server Error' });
   });
 
   /**
