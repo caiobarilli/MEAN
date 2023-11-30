@@ -23,17 +23,28 @@ jwtSecret=<your_secret_key>
 
 #
 
-Serve
+Development
 ```shell
-npm run server
+yarn start:dev
 ```
 
 Lint
 ```shell
-npm run lint
+yarn lint
 ```
 
 Lint fix
 ```shell
-npm run lint:fix
+yarn lint:fix
 ```
+
+Build
+```shell
+yarn build
+```
+
+Production
+```shell
+yarn start:prod
+```
+
