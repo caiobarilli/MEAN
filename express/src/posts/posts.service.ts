@@ -1,5 +1,5 @@
 import PostRepository from './posts.repository';
-import { IPost } from './entities/posts.entity';
+import { IPost } from './entities/post.entity';
 
 class PostService {
   public async getAllPosts(): Promise<IPost[]> {

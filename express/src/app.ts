@@ -1,6 +1,6 @@
 import express from 'express';
-import { expressLogger, logger } from './config/winston.config';
-import postsRouter from './routes/api/posts';
+import { expressLogger, logger } from '@/config/winston.config';
+import postsRouter from '@/routes/api/posts';
 
 const expressApp = () => {
   /**
