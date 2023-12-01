@@ -61,9 +61,27 @@ class AuthService {
       throw new Error('Invalid credentials');
     }
 
+    const payload = {
+      user: {
+        id: userID
+      }
+    };
+
+    const accessToken = await new Promise<string>((resolve, reject) => {
+      jwt.sign(
+        payload,
+        process.env.jwtSecret,
+        { expiresIn: 3600 },
+        (err, token) => {
+          if (err) reject(err);
+          resolve(token);
+        }
+      );
+    });
+
     return {
       message: 'User logged in successfully',
-      access_token: ''
+      access_token: accessToken
     };
   }
 }

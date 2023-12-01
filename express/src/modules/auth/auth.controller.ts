@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 import AuthService from './auth.service';
-import { SignUpResult } from './types/auth.types';
+import { SignInResult, SignUpResult } from './types/auth.types';
 
 class AuthController {
   public async register(
@@ -19,7 +19,10 @@ class AuthController {
     }
   }
 
-  public async login(req: Request, res: Response) {
+  public async login(
+    req: Request,
+    res: Response
+  ): Promise<SignInResult | void> {
     try {
       const result = await AuthService.signIn(req.body);
       res.json(result);
