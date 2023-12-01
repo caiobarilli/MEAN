@@ -1,13 +1,10 @@
 import { IUser } from '../../models/user.entity';
 import UserService from '../users/users.service';
+import { SignUpResult } from './types/auth.types';
 import jwt from 'jsonwebtoken';
 
 class AuthService {
-  public async signUp(userData: IUser): Promise<{
-    message: string;
-    access_token: string;
-    user: { id: string; fullname: string; email: string };
-  }> {
+  public async signUp(userData: IUser): Promise<SignUpResult> {
     const { id } = userData;
 
     const payload = {
@@ -31,7 +28,6 @@ class AuthService {
     const user = await UserService.createUser(userData);
 
     const createdUser = {
-      id: user.id,
       fullname: user.fullname,
       email: user.email
     };
