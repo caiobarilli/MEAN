@@ -16,9 +16,15 @@ class AuthService {
 
     const accessToken = await this.generateToken(id);
 
+    const createdUser = {
+      fullname: user.fullname,
+      email: user.email
+    };
+
     return {
       message: 'User created successfully',
-      access_token: accessToken
+      access_token: accessToken,
+      user: createdUser
     };
   }
 
