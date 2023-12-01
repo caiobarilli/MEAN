@@ -1,4 +1,4 @@
-import PostModel, { IPost } from './entities/post.entity';
+import PostModel, { IPost } from '../../models/post.entity';
 
 class PostRepository {
   public getAllPosts(): Promise<IPost[]> {

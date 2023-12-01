@@ -1,4 +1,4 @@
-import { IUser } from './entities/user.entity';
+import { IUser } from '../../models/user.entity';
 import UserRepository from './users.repository';
 
 class UserService {
