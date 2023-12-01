@@ -1,14 +1,15 @@
 import express, { Router } from 'express';
 import UserController from '../../modules/users/users.controller';
+import auth from '../../middlewares/auth';
 
 const router: Router = express.Router();
 
 /**
- * Get all users
  * @route GET /api/users
- * @access Public
+ * @access Private
+ * @description Get all users
  */
-router.get('/', UserController.getAllUsers);
+router.get('/', auth, UserController.getAllUsers);
 
 /**
  * Create a new user

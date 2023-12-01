@@ -1,5 +1,6 @@
 import { IUser } from '../../models/user.entity';
 import UserRepository from './users.repository';
+import jwt from 'jsonwebtoken';
 
 class UserService {
   public async getAllUsers(): Promise<IUser[]> {

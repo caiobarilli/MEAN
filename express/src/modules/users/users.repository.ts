@@ -1,4 +1,7 @@
-import UserModel, { IUser } from '../../models/user.entity';
+import UserModel, {
+  IUser,
+  UserSchemaValidation
+} from '../../models/user.entity';
 
 class UserRepository {
   public getAllUsers(): Promise<IUser[]> {

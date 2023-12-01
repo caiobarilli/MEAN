@@ -27,10 +27,10 @@ const expressApp = () => {
   /**
    * Use middleware to handle errors
    */
-  app.use((err, req, res, next) => {
-    logger.error(err.message);
-    res.status(500).json({ error: 'Internal Server Error' });
-  });
+  // app.use((err, req, res, next) => {
+  //   logger.error(err.message);
+  //   res.status(500).json({ error: 'Internal Server Error' });
+  // });
 
   /**
    * Define routes
