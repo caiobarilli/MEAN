@@ -1,5 +1,6 @@
 import express from 'express';
 import { expressLogger, logger } from './config/winston.config';
+import authRouter from './routes/api/auth';
 import userRouter from './routes/api/users';
 import postsRouter from './routes/api/posts';
 
@@ -27,14 +28,14 @@ const expressApp = () => {
   /**
    * Use middleware to handle errors
    */
-  // app.use((err, req, res, next) => {
-  //   logger.error(err.message);
-  //   res.status(500).json({ error: 'Internal Server Error' });
-  // });
+  app.use((err, req, res, next) => {
+    logger.error(err.message);
+  });
 
   /**
    * Define routes
    */
+  app.use('/api/auth', authRouter);
   app.use('/api/users', userRouter);
   app.use('/api/posts', postsRouter);
 

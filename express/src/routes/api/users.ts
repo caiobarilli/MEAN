@@ -11,11 +11,4 @@ const router: Router = express.Router();
  */
 router.get('/', auth, UserController.getAllUsers);
 
-/**
- * Create a new user
- * @route POST /api/users
- * @access Public
- */
-router.post('/', UserController.createUser);
-
 export default router;

@@ -4,13 +4,21 @@ import { v4 as uuidv4 } from 'uuid';
 
 export const UserSchemaValidation = Joi.object({
   username: Joi.string().required(),
+  fullname: Joi.string().required(),
+  password: Joi.string().required(),
+  confirmPassword: Joi.string().required(),
   email: Joi.string().email().required()
 });
 
 export interface IUser extends Document {
   _id: string;
   username: string;
+  fullname: string;
   email: string;
+  password: string;
+  confirmPassword: string;
+  role: string;
+  createdAt: Date;
 }
 
 const userSchema: Schema = new Schema(
@@ -22,7 +30,11 @@ const userSchema: Schema = new Schema(
       }
     },
     username: { type: String, required: true },
-    email: { type: String, required: true, unique: true }
+    fullname: { type: String, required: true },
+    email: { type: String, required: true, unique: true },
+    password: { type: String, required: true },
+    role: { type: String, default: 'user' },
+    createdAt: { type: Date, default: Date.now }
   },
   { _id: false }
 );

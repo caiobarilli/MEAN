@@ -1,11 +1,8 @@
-import UserModel, {
-  IUser,
-  UserSchemaValidation
-} from '../../models/user.entity';
+import UserModel, { IUser } from '../../models/user.entity';
 
 class UserRepository {
   public getAllUsers(): Promise<IUser[]> {
-    return UserModel.find();
+    return UserModel.find().select('-password');
   }
 
   public getUserById(id: string): Promise<IUser | null> {
