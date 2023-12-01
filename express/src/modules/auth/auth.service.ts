@@ -14,33 +14,11 @@ class AuthService {
 
     const { id } = user;
 
-    const payload = {
-      user: {
-        id: id
-      }
-    };
-
-    const accessToken = await new Promise<string>((resolve, reject) => {
-      jwt.sign(
-        payload,
-        process.env.jwtSecret,
-        { expiresIn: 3600 },
-        (err, token) => {
-          if (err) reject(err);
-          resolve(token);
-        }
-      );
-    });
-
-    const createdUser = {
-      fullname: user.fullname,
-      email: user.email
-    };
+    const accessToken = await this.generateToken(id);
 
     return {
       message: 'User created successfully',
-      access_token: accessToken,
-      user: createdUser
+      access_token: accessToken
     };
   }
 
@@ -61,9 +39,18 @@ class AuthService {
       throw new Error('Invalid credentials');
     }
 
+    const accessToken = await this.generateToken(userID._id);
+
+    return {
+      message: 'User logged in successfully',
+      access_token: accessToken
+    };
+  }
+
+  private generateToken = async (id: string) => {
     const payload = {
       user: {
-        id: userID
+        id
       }
     };
 
@@ -79,11 +66,8 @@ class AuthService {
       );
     });
 
-    return {
-      message: 'User logged in successfully',
-      access_token: accessToken
-    };
-  }
+    return accessToken;
+  };
 }
 
 export default new AuthService();
