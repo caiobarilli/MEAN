@@ -1,4 +1,5 @@
 import { IUser, UserSchemaValidation } from '../../models/user.entity';
+import { SingUpUserCredentials } from '../auth/types/auth.types';
 import { UserRole } from './enums/roles.enum';
 import UserRepository from './users.repository';
 import bcrypt from 'bcrypt';
@@ -12,7 +13,11 @@ class UserService {
     return UserRepository.getUserById(id);
   }
 
-  public async createUser(userData: IUser): Promise<IUser> {
+  public getUserByEmail(email: string): Promise<IUser | null> {
+    return UserRepository.getUserByEmail(email);
+  }
+
+  public async createUser(userData: SingUpUserCredentials): Promise<IUser> {
     const { error, value } = UserSchemaValidation.validate(userData);
 
     if (error !== undefined) {

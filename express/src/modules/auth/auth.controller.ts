@@ -3,7 +3,7 @@ import AuthService from './auth.service';
 import { SignUpResult } from './types/auth.types';
 
 class AuthController {
-  public async signUp(
+  public async register(
     req: Request,
     res: Response
   ): Promise<SignUpResult | void> {
@@ -19,7 +19,14 @@ class AuthController {
     }
   }
 
-  public async signIn(req: Request, res: Response) {}
+  public async login(req: Request, res: Response) {
+    try {
+      const result = await AuthService.signIn(req.body);
+      res.json(result);
+    } catch (error) {
+      res.status(500).json({ error: error.message });
+    }
+  }
 }
 
 export default new AuthController();

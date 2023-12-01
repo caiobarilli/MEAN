@@ -1,4 +1,5 @@
 import UserModel, { IUser } from '../../models/user.entity';
+import { SingUpUserCredentials } from '../auth/types/auth.types';
 
 class UserRepository {
   public getAllUsers(): Promise<IUser[]> {
@@ -9,7 +10,11 @@ class UserRepository {
     return UserModel.findById(id);
   }
 
-  public createUser(userData: IUser): Promise<IUser> {
+  public getUserByEmail(email: string): Promise<IUser | null> {
+    return UserModel.findOne({ email: email }).select('_id');
+  }
+
+  public async createUser(userData: SingUpUserCredentials): Promise<IUser> {
     return UserModel.create(userData);
   }
 
