@@ -1,6 +1,6 @@
 import express, { Router } from 'express';
 import UserController from '../../modules/users/users.controller';
-import auth from '../../middlewares/auth';
+import passport from 'passport';
 
 const router: Router = express.Router();
 
@@ -9,6 +9,10 @@ const router: Router = express.Router();
  * @access Private
  * @description Get all users
  */
-router.get('/', auth, UserController.getAllUsers);
+router.get(
+  '/',
+  passport.authenticate('jwt', { session: false }),
+  UserController.getAllUsers
+);
 
 export default router;

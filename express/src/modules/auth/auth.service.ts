@@ -5,16 +5,14 @@ import {
   UserCredentials
 } from './types/auth.types';
 import UserService from '../users/users.service';
-import jwt from 'jsonwebtoken';
+import generateAccessToken from '../../utils/generate.token';
 import bcrypt from 'bcrypt';
 
 class AuthService {
   public async signUp(userData: SingUpUserCredentials): Promise<SignUpResult> {
     const user = await UserService.createUser(userData);
 
-    const { id } = user;
-
-    const accessToken = await this.generateToken(id);
+    const accessToken = generateAccessToken(user.id, user.role);
 
     const createdUser = {
       fullname: user.fullname,
@@ -45,35 +43,13 @@ class AuthService {
       throw new Error('Invalid credentials');
     }
 
-    const accessToken = await this.generateToken(userID._id);
+    const accessToken = generateAccessToken(user.id, user.role);
 
     return {
       message: 'User logged in successfully',
       access_token: accessToken
     };
   }
-
-  private generateToken = async (id: string) => {
-    const payload = {
-      user: {
-        id
-      }
-    };
-
-    const accessToken = await new Promise<string>((resolve, reject) => {
-      jwt.sign(
-        payload,
-        process.env.jwtSecret,
-        { expiresIn: 3600 },
-        (err, token) => {
-          if (err) reject(err);
-          resolve(token);
-        }
-      );
-    });
-
-    return accessToken;
-  };
 }
 
 export default new AuthService();

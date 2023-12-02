@@ -1,8 +1,10 @@
 import express from 'express';
+import passport from 'passport';
 import { expressLogger, logger } from './config/winston.config';
 import authRouter from './routes/api/auth';
 import userRouter from './routes/api/users';
 import postsRouter from './routes/api/posts';
+import configurePassport from './config/passport.config';
 
 const expressApp = () => {
   /**
@@ -19,6 +21,11 @@ const expressApp = () => {
    * Use express.json() middleware to parse json data from request body
    */
   app.use(express.json());
+
+  /**
+   * Use passport middleware to handle authentication
+   */
+  app.use(configurePassport().initialize());
 
   /**
    * Use express.urlencoded() middleware to parse urlencoded data from request body
