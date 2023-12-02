@@ -6,9 +6,10 @@ import { checkRole, UserRole } from '../../middlewares/roles';
 const router: Router = express.Router();
 
 /**
+ * Get all users
  * @route GET /api/users
  * @access Private
- * @description Get all users
+ * @role admin
  */
 router.get(
   '/',

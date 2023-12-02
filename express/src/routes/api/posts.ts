@@ -22,7 +22,8 @@ router.get('/:id', PostsController.getPostById);
 /**
  * Create new post
  * @route POST /api/posts
- * @access Public
+ * @access Private
+ * @role admin
  */
 router.post(
   '/',
@@ -34,7 +35,8 @@ router.post(
 /**
  * Update post
  * @route PUT /api/posts/:id
- * @access Public
+ * @access Private
+ * @role admin
  */
 router.put(
   '/:id',
@@ -46,7 +48,8 @@ router.put(
 /**
  * Delete post
  * @route DELETE /api/posts/:id
- * @access Public
+ * @access Private
+ * @role admin
  */
 router.delete(
   '/:id',
