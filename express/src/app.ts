@@ -1,10 +1,9 @@
 import express from 'express';
-import passport from 'passport';
 import { expressLogger, logger } from './config/winston.config';
+import configurePassport from './config/passport.config';
 import authRouter from './routes/api/auth';
 import userRouter from './routes/api/users';
 import postsRouter from './routes/api/posts';
-import configurePassport from './config/passport.config';
 
 const expressApp = () => {
   /**

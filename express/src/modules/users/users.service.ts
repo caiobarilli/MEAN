@@ -1,6 +1,6 @@
 import { IUser, UserSchemaValidation } from '../../models/user.entity';
 import { SingUpUserCredentials } from '../auth/types/auth.types';
-import { UserRole } from './enums/roles.enum';
+import { UserRole } from '../../middlewares/roles';
 import UserRepository from './users.repository';
 import bcrypt from 'bcrypt';
 

@@ -10,6 +10,10 @@ class UserRepository {
     return UserModel.findById(id);
   }
 
+  public getRolesById(id: string): Promise<IUser | null> {
+    return UserModel.findById(id).select('role');
+  }
+
   public getUserByEmail(email: string): Promise<IUser | null> {
     return UserModel.findOne({ email: email }).select('_id');
   }
