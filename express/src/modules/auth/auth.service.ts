@@ -5,7 +5,7 @@ import {
   UserCredentials
 } from './types/auth.types';
 import UserService from '../users/users.service';
-import generateAccessToken from '../../utils/generate.token';
+import { generateAccessToken } from '../../utils/jwt';
 import bcrypt from 'bcrypt';
 
 class AuthService {
