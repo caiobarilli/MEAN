@@ -2,6 +2,11 @@ import jwt, { JwtPayload } from 'jsonwebtoken';
 import { IUser } from '../models/user.entity';
 import usersRepository from '../modules/users/users.repository';
 
+interface TokenPayload {
+  id: string;
+  role: string;
+}
+
 export const generateAccessToken = (userId: string, userRole): string => {
   const payload: JwtPayload = {
     id: userId,
@@ -13,10 +18,6 @@ export const generateAccessToken = (userId: string, userRole): string => {
   });
   return accessToken;
 };
-interface TokenPayload {
-  id: string;
-  role: string;
-}
 
 export const extractUserFromToken = async (
   token: string
