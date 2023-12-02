@@ -1,9 +1,9 @@
-import jwt from 'jsonwebtoken';
+import jwt, { JwtPayload } from 'jsonwebtoken';
 import { IUser } from '../models/user.entity';
 import usersRepository from '../modules/users/users.repository';
 
 export const generateAccessToken = (userId: string, userRole): string => {
-  const payload = {
+  const payload: JwtPayload = {
     id: userId,
     role: userRole
   };
@@ -13,14 +13,20 @@ export const generateAccessToken = (userId: string, userRole): string => {
   });
   return accessToken;
 };
+interface TokenPayload {
+  id: string;
+  role: string;
+}
 
 export const extractUserFromToken = async (
   token: string
 ): Promise<IUser | null> => {
   if (token) {
     try {
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      const decodedToken: any = jwt.verify(token, process.env.jwtSecret);
+      const decodedToken = jwt.verify(
+        token,
+        process.env.jwtSecret as string
+      ) as TokenPayload;
       const roles = await usersRepository.getRolesById(decodedToken.id);
       return roles;
     } catch {
