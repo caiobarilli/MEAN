@@ -27,3 +27,7 @@ yarn-error.log*
 # Arquivos de build
 dist/
 build/
+
+# Uploads
+
+storage/
