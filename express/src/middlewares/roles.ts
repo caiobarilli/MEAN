@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from 'express';
-import { extractUserFromToken } from '../utils/jwt';
+import { extractRoleFromToken } from '../utils/jwt';
 
 export enum UserRole {
   ADMIN = 'admin',
@@ -8,11 +8,9 @@ export enum UserRole {
 
 export const checkRole = (roles: UserRole[]) => {
   return async (req: Request, res: Response, next: NextFunction) => {
-    const user = await extractUserFromToken(
+    const userRoles: UserRole[] = await extractRoleFromToken(
       req.headers.authorization?.replace('Bearer ', '')
     );
-
-    const userRoles: UserRole[] = user.role as UserRole[];
 
     const hasPermission = userRoles.some((role) => roles.includes(role));
 

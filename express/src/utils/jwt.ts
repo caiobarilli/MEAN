@@ -1,10 +1,9 @@
 import jwt, { JwtPayload } from 'jsonwebtoken';
-import { IUser } from '../models/user.entity';
-import usersRepository from '../modules/users/users.repository';
+import { UserRole } from 'src/middlewares/roles';
 
 interface TokenPayload {
   id: string;
-  role: string;
+  role: UserRole[];
 }
 
 export const generateAccessToken = (userId: string, userRole): string => {
@@ -19,17 +18,16 @@ export const generateAccessToken = (userId: string, userRole): string => {
   return accessToken;
 };
 
-export const extractUserFromToken = async (
+export const extractRoleFromToken = async (
   token: string
-): Promise<IUser | null> => {
+): Promise<UserRole[]> => {
   if (token) {
     try {
       const decodedToken = jwt.verify(
         token,
         process.env.jwtSecret as string
       ) as TokenPayload;
-      const roles = await usersRepository.getRolesById(decodedToken.id);
-      return roles;
+      return decodedToken.role;
     } catch {
       return;
     }
