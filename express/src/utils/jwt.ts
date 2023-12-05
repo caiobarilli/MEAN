@@ -12,7 +12,8 @@ export const generateAccessToken = (userId: string, userRole): string => {
     role: userRole
   };
   const accessToken = jwt.sign(payload, process.env.jwtSecret, {
-    expiresIn: '1h'
+    expiresIn: '1h',
+    algorithm: 'HS256'
   });
   return accessToken;
 };
