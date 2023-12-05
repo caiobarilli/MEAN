@@ -1,5 +1,5 @@
 import jwt, { JwtPayload } from 'jsonwebtoken';
-import { UserRole } from 'src/middlewares/roles';
+import { UserRole } from '../middlewares/roles';
 
 interface TokenPayload {
   id: string;
@@ -11,7 +11,6 @@ export const generateAccessToken = (userId: string, userRole): string => {
     id: userId,
     role: userRole
   };
-
   const accessToken = jwt.sign(payload, process.env.jwtSecret, {
     expiresIn: '1h'
   });
@@ -22,16 +21,11 @@ export const extractRoleFromToken = async (
   token: string
 ): Promise<UserRole[]> => {
   if (token) {
-    try {
-      const decodedToken = jwt.verify(
-        token,
-        process.env.jwtSecret as string
-      ) as TokenPayload;
-      return decodedToken.role;
-    } catch {
-      return;
-    }
+    const decodedToken = jwt.verify(
+      token,
+      process.env.jwtSecret as string
+    ) as TokenPayload;
+    return decodedToken.role;
   }
-
   return null;
 };
