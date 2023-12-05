@@ -10,7 +10,9 @@ import { generateAccessToken } from '../../utils/jwt';
 import bcrypt from 'bcrypt';
 
 class AuthService {
-  public async signUp(userData: SingUpUserCredentials): Promise<SignUpResult> {
+  public async register(
+    userData: SingUpUserCredentials
+  ): Promise<SignUpResult> {
     const user = await userService.createUser(userData);
     const accessToken = generateAccessToken(user.id, user.role);
     const createdUser = {
@@ -24,7 +26,7 @@ class AuthService {
     };
   }
 
-  public async signIn(credentials: UserCredentials): Promise<SignInResult> {
+  public async login(credentials: UserCredentials): Promise<SignInResult> {
     const { email, password } = credentials;
     const user = await userRepository.getUserByEmail(email);
     if (!user) {

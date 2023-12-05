@@ -8,7 +8,7 @@ class AuthController {
     res: Response
   ): Promise<SignUpResult | void> {
     try {
-      const result = await AuthService.signUp(req.body);
+      const result = await AuthService.register(req.body);
       res.json(result);
     } catch (error) {
       if (error.code === 11000) {
@@ -24,7 +24,7 @@ class AuthController {
     res: Response
   ): Promise<SignInResult | void> {
     try {
-      const result = await AuthService.signIn(req.body);
+      const result = await AuthService.login(req.body);
       res.json(result);
     } catch (error) {
       res.status(500).json({ error: error.message });
