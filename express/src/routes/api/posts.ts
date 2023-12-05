@@ -1,5 +1,5 @@
 import express, { Router } from 'express';
-import { UserRole, checkRole } from '../../middlewares/roles';
+import { UserRole, restricted_roles } from '../../middlewares/roles';
 import PostsController from '../../modules/posts/posts.controller';
 import passport from 'passport';
 
@@ -28,7 +28,7 @@ router.get('/:id', PostsController.getPostById);
 router.post(
   '/',
   passport.authenticate('jwt', { session: false }),
-  checkRole([UserRole.ADMIN]),
+  restricted_roles([UserRole.ADMIN]),
   PostsController.createPost
 );
 
@@ -41,7 +41,7 @@ router.post(
 router.put(
   '/:id',
   passport.authenticate('jwt', { session: false }),
-  checkRole([UserRole.ADMIN]),
+  restricted_roles([UserRole.ADMIN]),
   PostsController.updatePost
 );
 
@@ -54,7 +54,7 @@ router.put(
 router.delete(
   '/:id',
   passport.authenticate('jwt', { session: false }),
-  checkRole([UserRole.ADMIN]),
+  restricted_roles([UserRole.ADMIN]),
   PostsController.deletePost
 );
 

@@ -8,7 +8,6 @@ class PostsController {
       const posts = await PostService.getAllPosts();
       res.status(200).json(posts);
     } catch (error) {
-      console.error(error);
       res.status(500).json({ error: 'Internal Server Error' });
     }
   }
@@ -23,7 +22,6 @@ class PostsController {
       }
       res.status(200).json(post);
     } catch (error) {
-      console.error(error);
       res.status(500).json({ error: 'Internal Server Error' });
     }
   }
@@ -31,17 +29,14 @@ class PostsController {
   public async createPost(req: Request, res: Response): Promise<void> {
     try {
       const { error, value } = PostSchemaValidation.validate(req.body);
-
       if (error) {
         res.status(400).json({ error: error.details[0].message });
         return;
       }
-
       const postData: IPost = value;
       const newPost = await PostService.createPost(postData);
       res.status(201).json(newPost);
     } catch (error) {
-      console.error(error);
       res.status(500).json({ error: 'Internal Server Error' });
     }
   }
@@ -53,7 +48,6 @@ class PostsController {
       const updatedPost = await PostService.updatePost(id, postData);
       res.status(200).json(updatedPost);
     } catch (error) {
-      console.error(error);
       res.status(500).json({ error: 'Internal Server Error' });
     }
   }

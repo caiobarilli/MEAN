@@ -1,50 +1,55 @@
 import { IUser, UserSchemaValidation } from '../../models/user.entity';
 import { SingUpUserCredentials } from '../auth/types/auth.types';
 import { UserRole } from '../../middlewares/roles';
-import UserRepository from './users.repository';
+import userRepository from './users.repository';
 import bcrypt from 'bcrypt';
 
 class UserService {
-  public async getAllUsers(): Promise<IUser[]> {
-    return UserRepository.getAllUsers();
-  }
-
-  public getUserById(id: string): Promise<IUser | null> {
-    return UserRepository.getUserById(id);
-  }
-
-  public getUserByEmail(email: string): Promise<IUser | null> {
-    return UserRepository.getUserByEmail(email);
-  }
-
+  /**
+   * Create new user
+   * @param {<SingUpUserCredentials>} userData
+   * @returns {Promise<IUser>}
+   */
   public async createUser(userData: SingUpUserCredentials): Promise<IUser> {
     const { error, value } = UserSchemaValidation.validate(userData);
-
     if (error !== undefined) {
       throw new Error(error.details[0].message);
     }
-
     if (value.password !== value.confirmPassword) {
       throw new Error('Password does not match with Confirm Password');
     }
-
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(value.password, salt);
-
     userData.password = hashedPassword;
     userData.role = UserRole.USER;
-
-    const createdUser = await UserRepository.createUser(userData);
-
-    return createdUser;
+    return await userRepository.createUser(userData);
   }
 
-  public updateUser(id: string, userData: IUser): Promise<IUser | null> {
-    return UserRepository.updateUser(id, userData);
-  }
-
-  public deleteUser(id: string): Promise<void> {
-    return UserRepository.deleteUser(id);
+  /**
+   * Set role to user by id
+   * @param {string} userID
+   * @returns {Promise<IUser>}
+   */
+  public async setRoleById(userID: string, userRole: UserRole) {
+    const userData = await userRepository.getUserById(userID);
+    if (!userData) {
+      throw new Error('User not found');
+    }
+    if (userData.role.includes(userRole)) {
+      throw new Error(`This user already has ${userRole} role`);
+    }
+    userData.role.push(userRole);
+    const user = await userRepository.updateUser(userID, userData);
+    const filteredUser = {
+      _id: user._id,
+      fullname: user.fullname,
+      email: user.email,
+      role: user.role
+    };
+    return {
+      message: 'User upgraded to admin role successfully',
+      user: filteredUser
+    };
   }
 }
 

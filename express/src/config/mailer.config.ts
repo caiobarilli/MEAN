@@ -2,7 +2,7 @@ import nodemailer from 'nodemailer';
 import handlebars from 'nodemailer-express-handlebars';
 
 /**
- * Exaple of usage:
+  * Exaple of usage:
   app.get('/', (req, res) => {
     transport().sendMail(
       mailOptions(

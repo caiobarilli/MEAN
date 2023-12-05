@@ -1,6 +1,17 @@
 import multer from 'multer';
 import path from 'path';
 
+/**
+ * Exaple of usage:
+app.get('/upload', (req, res) => {
+  res.render('upload-file', { title: 'Upload File' });
+});
+
+app.post('/upload', upload.single('file'), function (req, res, next) {
+  res.send(req.file);
+});
+*/
+
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
     cb(null, './storage/uploads');
@@ -15,11 +26,3 @@ const storage = multer.diskStorage({
 const upload = multer({ storage: storage });
 
 export { upload };
-
-// app.get('/upload', (req, res) => {
-//   res.render('upload-file', { title: 'Upload File' });
-// });
-
-// app.post('/upload', upload.single('file'), function (req, res, next) {
-//   res.send(req.file);
-// });

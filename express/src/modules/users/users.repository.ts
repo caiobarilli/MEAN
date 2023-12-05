@@ -1,33 +1,33 @@
-import UserModel, { IUser } from '../../models/user.entity';
+import userModel, { IUser } from '../../models/user.entity';
 import { SingUpUserCredentials } from '../auth/types/auth.types';
 
 class UserRepository {
   public getAllUsers(): Promise<IUser[]> {
-    return UserModel.find().select('-password');
+    return userModel.find().select('-password');
   }
 
   public getUserById(id: string): Promise<IUser | null> {
-    return UserModel.findById(id);
+    return userModel.findById(id);
   }
 
   public getRolesById(id: string): Promise<IUser | null> {
-    return UserModel.findById(id).select('role');
+    return userModel.findById(id).select('role');
   }
 
   public getUserByEmail(email: string): Promise<IUser | null> {
-    return UserModel.findOne({ email: email }).select('_id');
+    return userModel.findOne({ email: email });
   }
 
   public async createUser(userData: SingUpUserCredentials): Promise<IUser> {
-    return UserModel.create(userData);
+    return userModel.create(userData);
   }
 
   public updateUser(id: string, userData: IUser): Promise<IUser | null> {
-    return UserModel.findByIdAndUpdate(id, userData, { new: true });
+    return userModel.findByIdAndUpdate(id, userData, { new: true });
   }
 
   public async deleteUser(id: string): Promise<void> {
-    await UserModel.findByIdAndDelete(id);
+    await userModel.findByIdAndDelete(id);
   }
 }
 

@@ -6,14 +6,12 @@ export enum UserRole {
   USER = 'user'
 }
 
-export const checkRole = (roles: UserRole[]) => {
+export const restricted_roles = (roles: UserRole[]) => {
   return async (req: Request, res: Response, next: NextFunction) => {
     const userRoles: UserRole[] = await extractRoleFromToken(
       req.headers.authorization?.replace('Bearer ', '')
     );
-
     const hasPermission = userRoles.some((role) => roles.includes(role));
-
     if (hasPermission) {
       next();
     } else {

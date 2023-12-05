@@ -1,6 +1,6 @@
 import { Strategy, ExtractJwt } from 'passport-jwt';
 import passport from 'passport';
-import usersService from '../modules/users/users.service';
+import userRepository from '../modules/users/users.repository';
 
 const configurePassport = () => {
   const opts = {
@@ -11,7 +11,7 @@ const configurePassport = () => {
   passport.use(
     new Strategy(opts, (jwt_payload, done) => {
       try {
-        const user = usersService.getUserById(jwt_payload.id);
+        const user = userRepository.getUserById(jwt_payload.id);
         if (user) {
           return done(null, user);
         } else {
