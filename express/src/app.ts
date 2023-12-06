@@ -6,6 +6,7 @@ import authRouter from './routes/api/auth';
 import userRouter from './routes/api/user';
 import usersRouter from './routes/api/users';
 import postsRouter from './routes/api/posts';
+import webRouter from './routes/web';
 
 const expressApp = () => {
   /**
@@ -46,12 +47,17 @@ const expressApp = () => {
   });
 
   /**
-   * Define routes
+   * Define API routes
    */
   app.use('/api/auth', authRouter);
   app.use('/api/user', userRouter);
   app.use('/api/users', usersRouter);
   app.use('/api/posts', postsRouter);
+
+  /**
+   * Define web routes (tests)
+   */
+  app.use('/tests/', webRouter);
 
   /**
    * Return express app
