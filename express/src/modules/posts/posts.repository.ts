@@ -1,24 +1,24 @@
-import PostModel, { IPost } from '../../models/post.entity';
+import postModel, { IPost } from '../../models/post.entity';
 
 class PostRepository {
   public getAllPosts(): Promise<IPost[]> {
-    return PostModel.find();
+    return postModel.find();
   }
 
   public getPostById(id: string): Promise<IPost | null> {
-    return PostModel.findById(id);
+    return postModel.findById(id);
   }
 
   public createPost(postData: IPost): Promise<IPost> {
-    return PostModel.create(postData);
+    return postModel.create(postData);
   }
 
   public updatePost(id: string, postData: IPost): Promise<IPost | null> {
-    return PostModel.findByIdAndUpdate(id, postData, { new: true });
+    return postModel.findByIdAndUpdate(id, postData, { new: true });
   }
 
   public async deletePost(id: string): Promise<void> {
-    await PostModel.findByIdAndDelete(id);
+    await postModel.findByIdAndDelete(id);
   }
 }
 
