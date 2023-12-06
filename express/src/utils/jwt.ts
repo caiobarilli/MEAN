@@ -30,3 +30,16 @@ export const extractRoleFromToken = async (
   }
   return null;
 };
+
+export const extractUserIdFromToken = async (
+  token: string
+): Promise<string> => {
+  if (token) {
+    const decodedToken = jwt.verify(
+      token,
+      process.env.jwtSecret as string
+    ) as TokenPayload;
+    return decodedToken.id;
+  }
+  return null;
+};

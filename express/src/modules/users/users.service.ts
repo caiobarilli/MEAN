@@ -27,6 +27,32 @@ class UserService {
   }
 
   /**
+   * Show user by id
+   * @param {string} userID
+   * @returns {Promise<{message: string, user: IUser}>}
+   */
+  public async showUser(userID: string): Promise<{
+    message: string;
+    user: { _id: string; fullname: string; email: string; role: string[] };
+  }> {
+    const userData = await userRepository.getUserById(userID);
+    if (!userData) {
+      throw new Error('User not found');
+    }
+    const filteredUser = {
+      _id: userData._id,
+      fullname: userData.fullname,
+      email: userData.email,
+      role: userData.role
+    };
+
+    return {
+      message: 'User found',
+      user: filteredUser
+    };
+  }
+
+  /**
    * Set role to user by id
    * @param {string} userID
    * @param {UserRole} userRole

@@ -3,7 +3,8 @@ import { expressLogger, logger } from './config/winston.config';
 import configurePassport from './config/passport.config';
 import { configureHBS } from './config/hbs.config';
 import authRouter from './routes/api/auth';
-import userRouter from './routes/api/users';
+import userRouter from './routes/api/user';
+import usersRouter from './routes/api/users';
 import postsRouter from './routes/api/posts';
 
 const expressApp = () => {
@@ -48,7 +49,8 @@ const expressApp = () => {
    * Define routes
    */
   app.use('/api/auth', authRouter);
-  app.use('/api/users', userRouter);
+  app.use('/api/user', userRouter);
+  app.use('/api/users', usersRouter);
   app.use('/api/posts', postsRouter);
 
   /**

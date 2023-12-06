@@ -2,8 +2,21 @@ import { Request, Response } from 'express';
 import usersRepository from './users.repository';
 import usersService from './users.service';
 import { UserRole } from '../../middlewares/roles';
+import { extractUserIdFromToken } from '../../utils/jwt';
 
 class UserController {
+  public async showUser(req: Request, res: Response): Promise<void> {
+    try {
+      const userId = extractUserIdFromToken(
+        req.headers.authorization?.replace('Bearer ', '')
+      );
+      const result = await usersService.showUser(await userId);
+      res.status(200).json(result);
+    } catch (error) {
+      res.status(500).json({ error: error });
+    }
+  }
+
   /**
    * Get all users
    * @param {Request} req
