@@ -18,28 +18,29 @@ export const generateAccessToken = (userId: string, userRole): string => {
   return accessToken;
 };
 
-export const extractRoleFromToken = async (
-  token: string
-): Promise<UserRole[]> => {
+export const extractTokenData = async (
+  token: string,
+  payloadValue: string
+): Promise<{ role?: UserRole[]; id?: string }> => {
   if (token) {
     const decodedToken = jwt.verify(
       token,
       process.env.jwtSecret as string
     ) as TokenPayload;
-    return decodedToken.role;
-  }
-  return null;
-};
 
-export const extractUserIdFromToken = async (
-  token: string
-): Promise<string> => {
-  if (token) {
-    const decodedToken = jwt.verify(
-      token,
-      process.env.jwtSecret as string
-    ) as TokenPayload;
-    return decodedToken.id;
+    switch (payloadValue) {
+      case 'user__id':
+        return { id: decodedToken.id };
+        break;
+      case 'user__role':
+        return {
+          role: decodedToken.role
+        };
+        break;
+      default:
+        return;
+        break;
+    }
   }
   return null;
 };

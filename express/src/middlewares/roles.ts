@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from 'express';
-import { extractRoleFromToken } from '../utils/jwt';
+import { extractTokenData } from '../utils/jwt';
 
 export enum UserRole {
   ADMIN = 'admin',
@@ -8,9 +8,10 @@ export enum UserRole {
 
 export const restricted_roles = (roles: UserRole[]) => {
   return async (req: Request, res: Response, next: NextFunction) => {
-    const userRoles: UserRole[] = await extractRoleFromToken(
-      req.headers.authorization?.replace('Bearer ', '')
-    );
+    const userRoles: UserRole[] = (await extractTokenData(
+      req.headers.authorization?.replace('Bearer ', ''),
+      'user__role'
+    )) as UserRole[];
     const hasPermission = userRoles.some((role) => roles.includes(role));
     if (hasPermission) {
       next();
