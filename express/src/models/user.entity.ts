@@ -17,6 +17,10 @@ export interface IUser extends Document {
   email: string;
   password: string;
   confirmPassword: string;
+  // status: boolean;
+  // salt: string;
+  // confirmationToken: string | null;
+  // recoveryToken: string | null;
   role: string[];
   createdAt: Date;
 }
@@ -33,6 +37,10 @@ const userSchema: Schema = new Schema(
     fullname: { type: String, required: true },
     email: { type: String, required: true, unique: true },
     password: { type: String, required: true },
+    // status: { type: Boolean, default: false },
+    // salt: { type: String, required: true },
+    // confirmationToken: { type: String, default: null },
+    // recoveryToken: { type: String, default: null },
     role: { type: [String], default: ['user'] },
     createdAt: { type: Date, default: Date.now }
   },

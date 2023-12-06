@@ -1,7 +1,7 @@
-import { generateAccessToken } from '../../utils/jwt';
 import { UserRole } from '../../middlewares/roles';
 import { IUser, UserSchemaValidation } from '../../models/user.entity';
 import { SingUpUserCredentials } from '../auth/types/auth.types';
+import tokenService from '../token/token.service';
 import userRepository from './users.repository';
 import bcrypt from 'bcrypt';
 
@@ -74,7 +74,7 @@ class UserService {
       email: user.email,
       role: user.role
     };
-    const accessToken = generateAccessToken(user.id, user.role);
+    const accessToken = tokenService.generateAccessToken(user.id, user.role);
     return {
       message: 'User upgraded to admin role successfully',
       accessToken: accessToken,

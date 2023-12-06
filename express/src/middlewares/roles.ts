@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from 'express';
-import { extractTokenData } from '../utils/jwt';
+import tokenService from '../modules/token/token.service';
 
 export enum UserRole {
   ADMIN = 'admin',
@@ -8,7 +8,7 @@ export enum UserRole {
 
 export const restricted_roles = (roles: UserRole[]) => {
   return async (req: Request, res: Response, next: NextFunction) => {
-    const userRoles: UserRole[] = (await extractTokenData(
+    const userRoles: UserRole[] = (await tokenService.extractTokenData(
       req.headers.authorization?.replace('Bearer ', ''),
       'user__role'
     )) as UserRole[];

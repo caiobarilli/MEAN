@@ -6,7 +6,7 @@ import {
 } from './types/auth.types';
 import userRepository from '../users/users.repository';
 import userService from '../users/users.service';
-import { generateAccessToken } from '../../utils/jwt';
+import tokenService from '../token/token.service';
 import bcrypt from 'bcrypt';
 
 class AuthService {
@@ -14,7 +14,7 @@ class AuthService {
     userData: SingUpUserCredentials
   ): Promise<SignUpResult> {
     const user = await userService.createUser(userData);
-    const accessToken = generateAccessToken(user.id, user.role);
+    const accessToken = tokenService.generateAccessToken(user.id, user.role);
     const createdUser = {
       fullname: user.fullname,
       email: user.email
@@ -37,7 +37,7 @@ class AuthService {
     if (!isMatch) {
       throw new Error('Invalid credentials');
     }
-    const accessToken = generateAccessToken(user.id, user.role);
+    const accessToken = tokenService.generateAccessToken(user.id, user.role);
     return {
       message: 'User logged in successfully',
       access_token: accessToken
