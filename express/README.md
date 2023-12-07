@@ -19,7 +19,8 @@ mongoURI=<your_mongoDB_Atlas_uri_with_credentials>
 jwtSecret=<your_secret_key>
 ```
 
-### Uso
+
+### How to run
 
 #
 
