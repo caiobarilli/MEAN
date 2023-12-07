@@ -19,11 +19,18 @@ class UserService {
     if (value.password !== value.confirmPassword) {
       throw new Error('Password does not match with Confirm Password');
     }
-    const salt = await bcrypt.genSalt(10);
-    const hashedPassword = await bcrypt.hash(value.password, salt);
-    userData.password = hashedPassword;
+    userData.salt = await bcrypt.genSalt();
+    userData.password = await bcrypt.hash(
+      value.password + userData.salt,
+      userData.salt
+    );
     userData.role = UserRole.USER;
-    return await userRepository.createUser(userData);
+    const user = await userRepository.createUser(userData);
+    user.confirmationToken = await tokenService.generateConfirmationToken(
+      user.id
+    );
+    user.save();
+    return user;
   }
 
   /**
@@ -45,7 +52,6 @@ class UserService {
       email: userData.email,
       role: userData.role
     };
-
     return {
       message: 'User found',
       user: filteredUser

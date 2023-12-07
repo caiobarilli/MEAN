@@ -15,6 +15,7 @@ class AuthService {
   ): Promise<SignUpResult> {
     const user = await userService.createUser(userData);
     const accessToken = tokenService.generateAccessToken(user.id, user.role);
+    tokenService.createToken(user.id, accessToken);
     const createdUser = {
       fullname: user.fullname,
       email: user.email
@@ -32,12 +33,12 @@ class AuthService {
     if (!user) {
       throw new Error('User not found');
     }
-    await userRepository.getUserById(user._id);
-    const isMatch = await bcrypt.compare(password, user.password);
+    const saltPass = password + user.salt;
+    const isMatch = await bcrypt.compare(saltPass, user.password);
     if (!isMatch) {
       throw new Error('Invalid credentials');
     }
-    const accessToken = tokenService.generateAccessToken(user.id, user.role);
+    const accessToken = await tokenService.getUserToken(user.id);
     return {
       message: 'User logged in successfully',
       access_token: accessToken

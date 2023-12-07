@@ -1,5 +1,6 @@
 import jwt, { JwtPayload } from 'jsonwebtoken';
-import TokenRepository from './token.repository';
+import tokenRepository from './token.repository';
+import userRepository from '../users/users.repository';
 import { UserRole } from '../../middlewares/roles';
 
 interface TokenPayload {
@@ -10,17 +11,25 @@ interface TokenPayload {
 class TokenService {
   public async createToken(userId: string, token: string): Promise<void> {
     try {
-      await TokenRepository.createToken(userId, token);
+      await tokenRepository.createToken(userId, token);
     } catch (error) {
       throw new Error(`Erro ao criar token: ${error.message}`);
     }
   }
 
-  public async validateToken(userId: string, token: string): Promise<boolean> {
+  public async getUserToken(userId: string): Promise<string> {
     try {
-      return await TokenRepository.validateToken(userId, token);
+      const token = await tokenRepository.getTokenById(userId);
+      if (token === undefined) {
+        const role = await userRepository.getRolesById(userId);
+        const token = this.generateAccessToken(userId, role);
+        await tokenRepository.createToken(userId, token);
+        return token;
+      } else {
+        return token;
+      }
     } catch (error) {
-      throw new Error(`Erro ao validar token: ${error.message}`);
+      throw new Error(`Error: ${error.message}`);
     }
   }
 
@@ -29,11 +38,20 @@ class TokenService {
       id: userId,
       role: userRole
     };
-    const accessToken = jwt.sign(payload, process.env.jwtSecret, {
+    return jwt.sign(payload, process.env.jwtSecret, {
       expiresIn: '1h',
       algorithm: 'HS256'
     });
-    return accessToken;
+  }
+
+  public generateConfirmationToken(userId: string): string {
+    const payload = {
+      id: userId
+    };
+    return jwt.sign(payload, process.env.jwtSecret, {
+      expiresIn: '30m',
+      algorithm: 'HS256'
+    });
   }
 
   public async extractTokenData(

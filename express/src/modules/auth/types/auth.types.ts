@@ -5,6 +5,7 @@ export interface SingUpUserCredentials {
   password: string;
   confirmPassword: string;
   role?: string;
+  salt?: string;
 }
 
 export interface SignUpResult {
