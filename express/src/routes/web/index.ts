@@ -8,7 +8,7 @@ const router: Router = express.Router();
  * file upload page
  * @route GET /file-upload
  */
-router.get('/file-upload', webController.view);
+router.get('/file-upload', webController.fileUploadView);
 
 /**
  * file upload

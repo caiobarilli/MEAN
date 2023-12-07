@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 
 class WebController {
-  public view(req: Request, res: Response): void {
+  public fileUploadView(req: Request, res: Response): void {
     res.render('tests/upload-file', { title: 'Upload File' });
   }
 

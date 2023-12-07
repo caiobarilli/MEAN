@@ -1,33 +1,6 @@
 import nodemailer from 'nodemailer';
 import handlebars from 'nodemailer-express-handlebars';
 
-/**
-  * Exaple of usage:
-  app.get('/', (req, res) => {
-    transport().sendMail(
-      mailOptions(
-        {
-          to: 'example@mail.com',
-          subject: 'Example subject'
-        },
-        {
-          template: 'home',
-          context: {
-            title: 'Title:',
-            content: 'Example content'
-          }
-        }
-      ),
-      (error, info) => {
-        if (error) {
-          return res.status(500).send(error.toString());
-        }
-        res.status(200).send('Email has been sent: ' + info.response);
-      }
-    );
-  });
-*/
-
 interface EmailOptions {
   from: string;
   to: string;

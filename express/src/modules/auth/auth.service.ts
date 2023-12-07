@@ -7,6 +7,7 @@ import {
 import userRepository from '../users/users.repository';
 import userService from '../users/users.service';
 import tokenService from '../token/token.service';
+import { mailOptions, transport } from '../../config/mailer.config';
 import bcrypt from 'bcrypt';
 
 class AuthService {
@@ -20,8 +21,28 @@ class AuthService {
       fullname: user.fullname,
       email: user.email
     };
+    transport().sendMail(
+      mailOptions(
+        {
+          to: user.email,
+          subject: 'Account verification'
+        },
+        {
+          template: 'emails/email-confirmation',
+          context: {
+            url: `${process.env.FRONTEND_URL}/auth/verify?token=`,
+            token: user.confirmationToken
+          }
+        }
+      ),
+      (error) => {
+        if (error) {
+          throw new Error(error.toString());
+        }
+      }
+    );
     return {
-      message: 'User created successfully',
+      message: 'Email was sent please check your inbox to verify your account',
       access_token: accessToken,
       user: createdUser
     };
