@@ -11,6 +11,11 @@ import { mailOptions, transport } from '../../config/mailer.config';
 import bcrypt from 'bcrypt';
 
 class AuthService {
+  /**
+   * Register user
+   * @param userData
+   * @returns {Promise<SignUpResult>}
+   */
   public async register(
     userData: SingUpUserCredentials
   ): Promise<SignUpResult> {
@@ -48,11 +53,19 @@ class AuthService {
     };
   }
 
+  /**
+   * Login user
+   * @param {UserCredentials} credentials
+   * @returns {Promise<SignInResult>}
+   */
   public async login(credentials: UserCredentials): Promise<SignInResult> {
     const { email, password } = credentials;
     const user = await userRepository.getUserByEmail(email);
     if (!user) {
       throw new Error('User not found');
+    }
+    if (!user.status) {
+      throw new Error('User not verified, please check your email');
     }
     const saltPass = password + user.salt;
     const isMatch = await bcrypt.compare(saltPass, user.password);

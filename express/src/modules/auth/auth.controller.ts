@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
-import AuthService from './auth.service';
 import { SignInResult, SignUpResult } from './types/auth.types';
+import AuthService from './auth.service';
+import tokenService from '../token/token.service';
 
 class AuthController {
   public async register(
@@ -29,6 +30,20 @@ class AuthController {
     } catch (error) {
       res.status(500).json({ error: error.message });
     }
+  }
+
+  public async validate(req: Request, res: Response): Promise<void> {
+    try {
+      const { token } = req.params;
+      const result = await tokenService.validateConfirmationToken(token);
+      res.json(result);
+    } catch (error) {
+      res.status(500).json({ error: error.message });
+    }
+  }
+
+  public async refreshConfirmationToken(req: Request, res: Response) {
+    return;
   }
 }
 

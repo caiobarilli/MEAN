@@ -18,6 +18,10 @@ class UserRepository {
     return userModel.findOne({ email: email });
   }
 
+  public getUserByConfirmationToken(token: string): Promise<IUser | null> {
+    return userModel.findOne({ confirmationToken: token });
+  }
+
   public async createUser(userData: SingUpUserCredentials): Promise<IUser> {
     return userModel.create(userData);
   }

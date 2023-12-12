@@ -5,6 +5,12 @@ import { UserRole } from '../../middlewares/roles';
 import tokenService from '../token/token.service';
 
 class UserController {
+  /**
+   * Show user by id
+   * @param {Request} req
+   * @param {Response} res
+   * @returns {Promise<void>}
+   */
   public async showUser(req: Request, res: Response): Promise<void> {
     try {
       const userId = tokenService.extractTokenData(

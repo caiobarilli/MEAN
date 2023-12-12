@@ -17,4 +17,11 @@ router.post('/register', AuthController.register);
  */
 router.post('/login', AuthController.login);
 
+/**
+ * Validate confirmation token
+ * @route GET /api/auth/validate/:token
+ * @access Public
+ */
+router.get('/validate/:token', AuthController.validate);
+
 export default router;
