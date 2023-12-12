@@ -72,7 +72,11 @@ class UserService {
     if (userData.role.includes(userRole)) {
       throw new Error(`This user already has ${userRole} role`);
     }
+    if (userData.status === false) {
+      throw new Error('User is not verified');
+    }
     userData.role.push(userRole);
+    userData.updatedAt = new Date();
     const user = await userRepository.updateUser(userID, userData);
     const filteredUser = {
       _id: user._id,

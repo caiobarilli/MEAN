@@ -57,6 +57,15 @@ class TokenService {
       if (user.status) {
         throw new Error('User already confirmed');
       }
+      if (user.updatedAt) {
+        if (user.updatedAt.getTime() + 30 * 60 * 1000 < Date.now()) {
+          throw new Error('Token expired');
+        }
+      } else {
+        if (user.createdAt.getTime() + 30 * 60 * 1000 < Date.now()) {
+          throw new Error('Token expired');
+        }
+      }
       user.status = true;
       user.confirmationToken = null;
       await user.save();

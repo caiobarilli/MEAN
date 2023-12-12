@@ -23,6 +23,7 @@ export interface IUser extends Document {
   recoveryToken: string | null;
   role: string[];
   createdAt: Date;
+  updatedAt: Date | null;
 }
 
 const userSchema: Schema = new Schema(
@@ -42,7 +43,8 @@ const userSchema: Schema = new Schema(
     confirmationToken: { type: String, default: null },
     recoveryToken: { type: String, default: null },
     role: { type: [String], default: ['user'] },
-    createdAt: { type: Date, default: Date.now }
+    createdAt: { type: Date, default: Date.now },
+    updatedAt: { type: Date, default: null }
   },
   { _id: false }
 );
