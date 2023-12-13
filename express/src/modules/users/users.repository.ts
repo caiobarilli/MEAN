@@ -22,11 +22,12 @@ class UserRepository {
     return userModel.findOne({ confirmationToken: token });
   }
 
-  public async createUser(userData: SingUpUserCredentials): Promise<IUser> {
+  public createUser(userData: SingUpUserCredentials): Promise<IUser> {
     return userModel.create(userData);
   }
 
   public updateUser(id: string, userData: IUser): Promise<IUser | null> {
+    userData.updatedAt = new Date();
     return userModel.findByIdAndUpdate(id, userData, { new: true });
   }
 

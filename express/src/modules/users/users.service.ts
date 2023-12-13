@@ -29,7 +29,7 @@ class UserService {
     user.confirmationToken = await tokenService.generateConfirmationToken(
       user.id
     );
-    user.save();
+    await userRepository.updateUser(user.id, user);
     return user;
   }
 
@@ -76,7 +76,6 @@ class UserService {
       throw new Error('User is not verified');
     }
     userData.role.push(userRole);
-    userData.updatedAt = new Date();
     const user = await userRepository.updateUser(userID, userData);
     const filteredUser = {
       _id: user._id,

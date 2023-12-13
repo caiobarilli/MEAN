@@ -24,4 +24,14 @@ router.post('/login', AuthController.login);
  */
 router.get('/validate/:token', AuthController.validate);
 
+/**
+ * Refresh confirmation token
+ * @route GET /api/auth/token/:email
+ * @access Public
+ */
+router.get(
+  '/refresh/confirmation-token/:email',
+  AuthController.refreshConfirmationToken
+);
+
 export default router;

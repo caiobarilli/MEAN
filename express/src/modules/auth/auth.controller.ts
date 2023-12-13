@@ -4,6 +4,12 @@ import AuthService from './auth.service';
 import tokenService from '../token/token.service';
 
 class AuthController {
+  /**
+   * Register a new user
+   * @param req
+   * @param res
+   * @returns {Promise<SignUpResult | void>}
+   */
   public async register(
     req: Request,
     res: Response
@@ -20,6 +26,12 @@ class AuthController {
     }
   }
 
+  /**
+   * Login user
+   * @param req
+   * @param res
+   * @returns {Promise<SignInResult | void>}
+   */
   public async login(
     req: Request,
     res: Response
@@ -32,6 +44,12 @@ class AuthController {
     }
   }
 
+  /**
+   * Validate confirmation token
+   * @param req
+   * @param res
+   * @returns {Promise<string>}
+   */
   public async validate(req: Request, res: Response): Promise<void> {
     try {
       const { token } = req.params;
@@ -42,8 +60,23 @@ class AuthController {
     }
   }
 
-  public async refreshConfirmationToken(req: Request, res: Response) {
-    return;
+  /**
+   * Refresh confirmation token
+   * @param req
+   * @param res
+   * @returns {Promise<void>}
+   */
+  public async refreshConfirmationToken(
+    req: Request,
+    res: Response
+  ): Promise<void> {
+    try {
+      const { email } = req.params;
+      const result = await tokenService.refreshConfirmationToken(email);
+      res.json(result);
+    } catch (error) {
+      res.status(500).json({ error: error.message });
+    }
   }
 }
 

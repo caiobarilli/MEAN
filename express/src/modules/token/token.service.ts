@@ -46,9 +46,10 @@ class TokenService {
 
   /**
    * Validate confirmation token
-   *
+   * @param {string} token
+   * @returns {Promise<string>}
    */
-  public async validateConfirmationToken(token: string) {
+  public async validateConfirmationToken(token: string): Promise<string> {
     try {
       const user = await userRepository.getUserByConfirmationToken(token);
       if (!user) {
@@ -68,7 +69,7 @@ class TokenService {
       }
       user.status = true;
       user.confirmationToken = null;
-      await user.save();
+      await userRepository.updateUser(user.id, user);
       const tokenData = await tokenRepository.getTokenById(user.id);
       if (tokenData === undefined) {
         const token = this.generateAccessToken(user.id, user.role);
@@ -80,6 +81,24 @@ class TokenService {
     } catch (error) {
       throw new Error(`Error: ${error.message}`);
     }
+  }
+
+  /**
+   * Refresh confirmation token
+   * @param {string} email
+   * @returns {Promise<string>}
+   */
+  public async refreshConfirmationToken(email: string): Promise<string> {
+    const user = await userRepository.getUserByEmail(email);
+    if (!user) {
+      throw new Error('No user found with this email');
+    }
+    if (user.status) {
+      throw new Error('User already confirmed');
+    }
+    user.confirmationToken = this.generateConfirmationToken(user.id);
+    await userRepository.updateUser(user.id, user);
+    return user.confirmationToken;
   }
 
   /**
